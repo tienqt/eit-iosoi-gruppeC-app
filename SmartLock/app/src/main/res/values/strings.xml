@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">SmartLock</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register_acitivity">RegisterAcitivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
+</resources>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="no.gruppec.iosoi.eit.smartlock.LoginActivity"
+    tools:showIn="@layout/activity_login"
+    android:visibility="visible">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/email_text"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="155dp"
+        android:text="Email" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/pwd_text"
+        android:text="Password (optional)"
+        android:visibility="visible"
+        android:layout_below="@+id/email_text"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register / Log in"
+        android:id="@+id/logreg_button"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="*"
+        android:id="@+id/email_err"
+        android:layout_alignTop="@+id/email_text"
+        android:layout_toRightOf="@+id/email_text"
+        android:layout_toEndOf="@+id/email_text"
+        android:layout_above="@+id/pwd_text"
+        android:textColor="#ff0202"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="*"
+        android:id="@+id/pwd_err"
+        android:layout_below="@+id/email_text"
+        android:layout_toRightOf="@+id/email_text"
+        android:layout_toEndOf="@+id/email_text"
+        android:textColor="#ff0000"
+        android:visibility="invisible" />
+
+</RelativeLayout>
