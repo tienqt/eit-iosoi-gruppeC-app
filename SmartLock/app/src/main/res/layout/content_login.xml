@@ -38,10 +38,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register / Log in"
-        android:id="@+id/logreg_button"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:text="Log in"
+        android:id="@+id/log_button"
+        android:layout_below="@+id/pwd_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,5 +68,13 @@
         android:layout_toEndOf="@+id/email_text"
         android:textColor="#ff0000"
         android:visibility="invisible" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register user"
+        android:id="@+id/reg_button"
+        android:layout_below="@+id/log_button"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
