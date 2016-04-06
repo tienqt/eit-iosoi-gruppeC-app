@@ -1,6 +1,31 @@
 <resources>
-    <string name="app_name">SmartLock</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="title_activity_register_acitivity">RegisterAcitivity</string>
-    <string name="title_activity_register">RegisterActivity</string>
+    <string name="app_name">smartlock</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_title">Smart lock</string>
+    <string name="action_sign_in">Register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- Strings related to  register user-->
+    <string name="prompt_username_hint">Username</string>
+    <string name="prompt_email_hint">E-mail</string>
+    <string name="prompt_password_one_hint">Password</string>
+    <string name="prompt_password_two_hint">Confirm password</string>
+    <string name="prompt_phone_hint">Phone number</string>
+    <string name="action_register">Register</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="title_activity_maps">Map</string>
+
 </resources>
