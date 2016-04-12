@@ -22,6 +22,7 @@ public class BikeActivity extends AppCompatActivity {
             if(res.equals("0")){
                 Toast.makeText(getApplicationContext(), "You are already the owner of this bicycle.", Toast.LENGTH_SHORT).show();
             } else {
+                Userdata.getInstance().loeadDataFromDB(Userdata.getInstance().getUsername(), false);
                 onBackPressed();
             }
         }
@@ -30,11 +31,7 @@ public class BikeActivity extends AppCompatActivity {
         protected Boolean doInBackground(String... params) {
 
             String add_bike_URL = "http://drawroulette.com/eit/addbike.php?bikeid=" + params[0] + "&bikeStatus=OK&owner=" + Userdata.getInstance().getUsername() + "&userid=" + Userdata.getInstance().getUser_id() + "&bikename=" + params[1];
-            try {
-                res = utils.getHttp(add_bike_URL);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            res = utils.getHttp(add_bike_URL, getApplicationContext());
             return null;
         }
     }

@@ -1,5 +1,8 @@
 package com.smartlock.eit.smartlock;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
@@ -13,20 +16,32 @@ import java.net.URL;
  */
 public class utils {
 
-    public static String getHttp(String request) throws Exception {
+    public static String getHttp(String request, Context context) {
         // http://stackoverflow.com/a/4206094
-        StringBuilder result = new StringBuilder();
-        URL url = new URL(request);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setConnectTimeout(10000);
-        conn.setRequestMethod("GET");
-        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        String line;
-        while ((line = rd.readLine()) != null) {
-            result.append(line);
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if(activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+            try {
+                StringBuilder result = new StringBuilder();
+                URL url = new URL(request);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setConnectTimeout(10000);
+                conn.setRequestMethod("GET");
+                BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    result.append(line);
+                }
+                rd.close();
+                return result.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        rd.close();
-        return result.toString();
+
+        return "could not connect to internet";
     }
 
 }

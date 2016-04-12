@@ -29,12 +29,14 @@ public class ProfileFrag extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     ListView bikeView;
-    ArrayList<String> listItems=new ArrayList<String>();
 
-    ArrayAdapter<String> adapter;
+    TextView username;
+    TextView email;
+    TextView phone;
 
 
     public ProfileFrag() {
+        Userdata.getInstance().setProfileFrag(this);
     }
 
     /**
@@ -54,11 +56,10 @@ public class ProfileFrag extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         bikeView = (ListView) rootView.findViewById(R.id.bikeListView);
-        listItems = new ArrayList<String>();
 
-        TextView username = (TextView) rootView.findViewById(R.id.prof_username);
-        TextView email = (TextView) rootView.findViewById(R.id.prof_email);
-        TextView phone = (TextView) rootView.findViewById(R.id.prof_mobile);
+        username = (TextView) rootView.findViewById(R.id.prof_username);
+        email = (TextView) rootView.findViewById(R.id.prof_email);
+        phone = (TextView) rootView.findViewById(R.id.prof_mobile);
 
         ImageButton new_bike_btn = (ImageButton) rootView.findViewById(R.id.new_bike_btn);
 
@@ -72,14 +73,23 @@ public class ProfileFrag extends Fragment {
             }
         });
 
-        adapter = (new ArrayAdapter<String>(Userdata.getInstance().getContext(), android.R.layout.simple_list_item_1, listItems) {
+        updateUI();
+
+        return rootView;
+    }
+
+    public void updateUI() {
+        ArrayList<String> listItems=new ArrayList<String>();
+        ArrayAdapter<String> adapter = (new ArrayAdapter<String>(Userdata.getInstance().getContext(), android.R.layout.simple_list_item_1, listItems) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 TextView textView = (TextView) super.getView(position, convertView, parent);
-                if(Userdata.getInstance().getBike(position).isStolen()){
-                    textView.setTextColor(Color.RED);
-                } else {
-                    textView.setTextColor(Color.BLACK);
+                if(position < Userdata.getInstance().getBike().size()){
+                    if(Userdata.getInstance().getBike(position).isStolen()){
+                        textView.setTextColor(Color.RED);
+                    } else {
+                        textView.setTextColor(Color.BLACK);
+                    }
                 }
                 return textView;
             }
@@ -97,16 +107,13 @@ public class ProfileFrag extends Fragment {
 
         for(int i = 0; i<Userdata.getInstance().getBike().size(); i++){
             if(!Userdata.getInstance().getBike(i).getOwnder().equals(Userdata.getInstance().getUsername())) {
-                adapter.add(Userdata.getInstance().getBike(i).getOwnder() + " " + Userdata.getInstance().getBike(i).getBikeName());
+                adapter.add(Userdata.getInstance().getBike(i).getBikeName() + "    " + Userdata.getInstance().getBike(i).getOwnder());
             }
         }
-
 
 
         email.setText(Userdata.getInstance().getEmail());
         username.setText(Userdata.getInstance().getUsername());
         phone.setText(Userdata.getInstance().getMobileNumber());
-
-        return rootView;
     }
 }

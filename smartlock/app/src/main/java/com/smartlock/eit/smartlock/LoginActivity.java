@@ -354,16 +354,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             String checkIfUserExsistUrl = "http://drawroulette.com/eit/checkifuserexsist.php?username=" + mEmail;
             String login = "http://drawroulette.com/eit/login.php?username=" + mEmail + "&password=" + mPassword;
 
-            try {
-              if(utils.getHttp(login).startsWith("1")) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+
+          if(utils.getHttp(login, getApplicationContext()).startsWith("1")) {
+                return true;
+            } else {
+                return false;
             }
-            return false;
         }
 
         @Override

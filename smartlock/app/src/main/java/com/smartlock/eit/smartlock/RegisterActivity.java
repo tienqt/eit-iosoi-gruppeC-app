@@ -29,14 +29,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(String... params) {
-            try {
-                emailRes = utils.getHttp(params[0]);
-                usernameRes = utils.getHttp(params[1]);
-                loginRes = utils.getHttp(params[2]);
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            emailRes = utils.getHttp(params[0], getApplicationContext());
+            usernameRes = utils.getHttp(params[1], getApplicationContext());
+            loginRes = utils.getHttp(params[2], getApplicationContext());
+
             return null;
         }
 

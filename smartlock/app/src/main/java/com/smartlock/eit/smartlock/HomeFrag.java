@@ -32,8 +32,11 @@ public class HomeFrag extends Fragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
     boolean locked;
+    Spinner bikeSpinner;
+    ImageButton lockbtn;
 
     public HomeFrag() {
+        Userdata.getInstance().setHomeFrag(this );
     }
 
     /**
@@ -55,19 +58,21 @@ public class HomeFrag extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        Spinner bikeSpinner = (Spinner)rootView.findViewById(R.id.bikeSpinner);
+        bikeSpinner = (Spinner)rootView.findViewById(R.id.bikeSpinner);
         statusText = (TextView) rootView.findViewById(R.id.bikeStatus);
-        final ImageButton lockbtn = (ImageButton) rootView.findViewById(R.id.lockbikebtn);
+        lockbtn = (ImageButton) rootView.findViewById(R.id.lockbikebtn);
         ImageButton statbtn = (ImageButton) rootView.findViewById(R.id.bikestatsbtn);
         ImageButton findbtn = (ImageButton) rootView.findViewById(R.id.findBikebtn);
 
         locked = true;
 
+        updateUI();
+
         findbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent startMapIntent = new Intent(Userdata.getInstance().getContext(), MapsActivity.class);
-               // startMapIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                // startMapIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(startMapIntent);
 
             }
@@ -76,12 +81,10 @@ public class HomeFrag extends Fragment {
         lockbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(locked) {
-                    lockbtn.setImageResource(R.drawable.bikeunlock);
-                    locked = false;
+                if (Userdata.getInstance().getBike(bikeSpinner.getSelectedItemPosition()).isLocked()) {
+                    Userdata.getInstance().setBikeLock(Userdata.getInstance().getBike(bikeSpinner.getSelectedItemPosition()).getBikeId(), false);
                 } else {
-                    locked = true;
-                    lockbtn.setImageResource(R.drawable.bikelock);
+                    Userdata.getInstance().setBikeLock(Userdata.getInstance().getBike(bikeSpinner.getSelectedItemPosition()).getBikeId(), true);
                 }
             }
         });
@@ -94,6 +97,10 @@ public class HomeFrag extends Fragment {
             }
         });
 
+        return rootView;
+    }
+
+    public void updateUI(){
         ArrayAdapter<String> adapter;
         List<String> list;
 
@@ -110,7 +117,7 @@ public class HomeFrag extends Fragment {
 
         for(int i = 0; i<Userdata.getInstance().getBike().size(); i++){
             if(!Userdata.getInstance().getBike(i).getOwnder().equals(Userdata.getInstance().getUsername())) {
-                list.add(Userdata.getInstance().getBike(i).getBikeName() + "  Ownder: " + Userdata.getInstance().getBike(i).getOwnder());
+                list.add(Userdata.getInstance().getBike(i).getBikeName() + "     " + Userdata.getInstance().getBike(i).getOwnder());
             }
         }
 
@@ -120,30 +127,37 @@ public class HomeFrag extends Fragment {
         bikeSpinner.setAdapter(adapter);
 
 
-        bikeSpinner.setOnItemSelectedListener(OnBikeSpinner);
+        bikeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                if (parent.getChildAt(0) != null) {
+                    ((TextView) parent.getChildAt(0)).setTextSize(20);
+                }
 
-        return rootView;
-    }
-
-    public AdapterView.OnItemSelectedListener OnBikeSpinner = new AdapterView.OnItemSelectedListener() {
-        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            if(parent.getChildAt(0) != null) {
-                ((TextView) parent.getChildAt(0)).setTextSize(20);
-            }
-
-            if(Userdata.getInstance().getBike().size() > 0) {
-                if (Userdata.getInstance().getBike(pos).isStolen() == false) {
-                    statusText.setTextColor(Color.GREEN);
-                    statusText.setText("Status: not stolen");
-                } else {
-                    statusText.setTextColor(Color.RED);
-                    statusText.setText("Status: stolen");
+                if (Userdata.getInstance().getBike().size() > 0) {
+                    if (Userdata.getInstance().getBike(pos).isStolen() == false) {
+                        statusText.setTextColor(Color.GREEN);
+                        statusText.setText("");
+                    } else {
+                        statusText.setTextColor(Color.RED);
+                        statusText.setText("STOLEN");
+                    }
+                    updateLockBtn();
                 }
             }
-        }
 
-        public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        updateLockBtn();
+    }
+
+    public void updateLockBtn(){
+        if (Userdata.getInstance().getBike(bikeSpinner.getSelectedItemPosition()).isLocked()) {
+            lockbtn.setImageResource(R.drawable.bikelock);
+        } else {
+            lockbtn.setImageResource(R.drawable.bikeunlock);
         }
-    };
+    }
 }
