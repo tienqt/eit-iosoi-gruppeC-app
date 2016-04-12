@@ -49,7 +49,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="No bike"
                 android:id="@+id/bikeStatus"
                 android:textColor="#15a40e"
                 android:layout_marginTop="5dp"

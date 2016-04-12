@@ -51,14 +51,16 @@ public class RegisterActivity extends AppCompatActivity {
 
             if(rdyForReg){
                 if(loginRes.startsWith("1")){
-                    Userdata.getInstance().setEmail(email.getText().toString());
+                   /* Userdata.getInstance().setEmail(email.getText().toString());
                     Userdata.getInstance().setUsername(username.getText().toString());
                     Userdata.getInstance().setMobileNumber(phoneNumber.getText().toString());
                     Userdata.getInstance().getBike().clear();
 
                     Intent mainActivityIntent = new Intent(RegisterActivity.this, MenuActivity.class);
                     mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(mainActivityIntent);
+                    startActivity(mainActivityIntent);*/
+
+                    Userdata.getInstance().loeadDataFromDB(username.getText().toString(), true);
 
                 }
             }

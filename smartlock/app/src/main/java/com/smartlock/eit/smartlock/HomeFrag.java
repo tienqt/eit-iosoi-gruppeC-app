@@ -36,7 +36,7 @@ public class HomeFrag extends Fragment {
     ImageButton lockbtn;
 
     public HomeFrag() {
-        Userdata.getInstance().setHomeFrag(this );
+        Userdata.getInstance().setHomeFrag(this);
     }
 
     /**
@@ -82,8 +82,10 @@ public class HomeFrag extends Fragment {
             @Override
             public void onClick(View v) {
                 if (Userdata.getInstance().getBike(bikeSpinner.getSelectedItemPosition()).isLocked()) {
+                    Userdata.getInstance().getBike(bikeSpinner.getSelectedItemPosition()).setLocked(false);
                     Userdata.getInstance().setBikeLock(Userdata.getInstance().getBike(bikeSpinner.getSelectedItemPosition()).getBikeId(), false);
                 } else {
+                    Userdata.getInstance().getBike(bikeSpinner.getSelectedItemPosition()).setLocked(true);
                     Userdata.getInstance().setBikeLock(Userdata.getInstance().getBike(bikeSpinner.getSelectedItemPosition()).getBikeId(), true);
                 }
             }
@@ -127,13 +129,17 @@ public class HomeFrag extends Fragment {
         bikeSpinner.setAdapter(adapter);
 
 
+        if (Userdata.getInstance().getBike().size() > bikeSpinner.getSelectedItemPosition() ) {
+            updateLockBtn();
+        }
+
         bikeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (parent.getChildAt(0) != null) {
                     ((TextView) parent.getChildAt(0)).setTextSize(20);
                 }
 
-                if (Userdata.getInstance().getBike().size() > 0) {
+                if (Userdata.getInstance().getBike().size() < pos ) {
                     if (Userdata.getInstance().getBike(pos).isStolen() == false) {
                         statusText.setTextColor(Color.GREEN);
                         statusText.setText("");
@@ -149,8 +155,6 @@ public class HomeFrag extends Fragment {
 
             }
         });
-
-        updateLockBtn();
     }
 
     public void updateLockBtn(){

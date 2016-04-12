@@ -251,14 +251,6 @@ public class Userdata {
 
             }
 
-            if(context != null){
-                if(startMainScreenn) {
-                    Intent mainActivityIntent = new Intent(context, MenuActivity.class);
-                    mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    context.startActivity(mainActivityIntent);
-                }
-            }
-
             if(profileFrag != null){
                 profileFrag.updateUI();
             }
@@ -268,6 +260,14 @@ public class Userdata {
             }
 
             updatelock = false;
+
+            if(context != null){
+                if(startMainScreenn) {
+                    Intent mainActivityIntent = new Intent(context, MenuActivity.class);
+                    mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    context.startActivity(mainActivityIntent);
+                }
+            }
         }
 
     }
@@ -300,11 +300,6 @@ public class Userdata {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            for(int i = 0; i<bikes.size(); i++){
-                if(bikes.get(i).getBikeId().equals(bikeid)){
-                    bikes.get(i).setLocked(locked);
-                }
-            }
             if(homeFrag != null){
                 homeFrag.updateLockBtn();
             }
