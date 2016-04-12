@@ -128,18 +128,13 @@ public class HomeFrag extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bikeSpinner.setAdapter(adapter);
 
-
-        if (Userdata.getInstance().getBike().size() > bikeSpinner.getSelectedItemPosition() ) {
-            updateLockBtn();
-        }
-
         bikeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (parent.getChildAt(0) != null) {
                     ((TextView) parent.getChildAt(0)).setTextSize(20);
                 }
 
-                if (Userdata.getInstance().getBike().size() < pos ) {
+                if (Userdata.getInstance().getBike().size() < pos) {
                     if (Userdata.getInstance().getBike(pos).isStolen() == false) {
                         statusText.setTextColor(Color.GREEN);
                         statusText.setText("");
@@ -147,21 +142,25 @@ public class HomeFrag extends Fragment {
                         statusText.setTextColor(Color.RED);
                         statusText.setText("STOLEN");
                     }
-                    updateLockBtn();
                 }
+                updateLockBtn();
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
+
+        updateLockBtn();
     }
 
     public void updateLockBtn(){
-        if (Userdata.getInstance().getBike(bikeSpinner.getSelectedItemPosition()).isLocked()) {
-            lockbtn.setImageResource(R.drawable.bikelock);
-        } else {
-            lockbtn.setImageResource(R.drawable.bikeunlock);
+        if (Userdata.getInstance().getBike().size() > bikeSpinner.getSelectedItemPosition() ) {
+            if (Userdata.getInstance().getBike(bikeSpinner.getSelectedItemPosition()).isLocked()) {
+                lockbtn.setImageResource(R.drawable.bikelock);
+            } else {
+                lockbtn.setImageResource(R.drawable.bikeunlock);
+            }
         }
     }
 }
