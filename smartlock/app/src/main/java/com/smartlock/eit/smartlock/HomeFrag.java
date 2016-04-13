@@ -72,7 +72,7 @@ public class HomeFrag extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent startMapIntent = new Intent(Userdata.getInstance().getContext(), MapsActivity.class);
-                // startMapIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startMapIntent.putExtra("BikeId", Userdata.getInstance().getBike(bikeSpinner.getSelectedItemPosition()).getBikeId());
                 startActivity(startMapIntent);
 
             }
